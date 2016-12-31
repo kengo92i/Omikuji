@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('images/bg.png');
+}
+
+.content {
+    flex: 1;
+}
+
+/* common */
+.bg-vermilion {
+    color: #FFF;
+    background-color: #e74c3c;
+}
+
+.btn-vermilion {
+    color: #FFF;
+    background-color: #e74c3c;
+}
+.btn-vermilion:hover {
+    color: #FFF;
+    background-color: #c0392b;
+    border: 2px solid #f1c40f;
+}
+.btn-vermilion:link, .btn-vermilion:visited, .btn-vermilion:active {
+    color: #FFF; 
+}
+
+.btn-twitter {
+    color: #FFF;
+    background-color: #55acee;
+}
+.btn-twitter:hover {
+    color: #FFF;
+    background-color: #008fde;
+}
+.btn-twitter:link, .btn-twitter:visited, .btn-twitter:active {
+    color: #FFF; 
+}
+
+.yellow-band {
+    position: absolute;
+    color: #333;
+    background: rgba(243, 156, 18, 0.5);
+    top: 0px;
+    right: 10px;
+    width: 25px;
+    height: 100px;
+    padding: 5px;
+}
+
+/* raffle */
+.animation-frame {
+    position: relative;
+    width: 100%;
+}
+.animation-frame span {
+    position: absolute;
+    bottom:10%;
+    left:0%;
+    width: 100%;
+}
+
+/* footer */
+#footer {
+    color: #FFF;
+    background: #34495e;
+    height: 160px;
+    padding-top: 30px;
+}
+#footer img {
+    margin-bottom: 10px;
+}
