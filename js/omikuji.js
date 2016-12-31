@@ -109,7 +109,7 @@
         var n = parseInt(num);
         var fortune = getFortune(n);
         var imgUrl = getImgUrl(n);
-        var html = '<a class="twitter btn btn-twitter" href="http://twitter.com/share?url=[共有したいURL]&text=【進捗みくじ】私の今年の運勢は「' + fortune + '」でした。2017年の進捗具合を占おう！' + imgUrl + '&hashtags=進捗みくじ" target="_blank">ツイートする</a>';
+        var html = '<a class="twitter btn btn-twitter" href="http://twitter.com/share?url=https://goo.gl/ljRHk8&text=【進捗みくじ】私の今年の運勢は「' + fortune + '」でした。2017年の進捗具合を占おう！' + imgUrl + '&hashtags=進捗みくじ" target="_blank">ツイートする</a>';
         $('#share-button').append(html);
     }
 
