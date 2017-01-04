@@ -18,9 +18,12 @@
      * @return {String} 進捗みくじのファイル名
      */
     var getOmikujiFilename = function (num) {
-        var hexNum = parseInt(num).toString(16);
-        var filename = "0x" + (("0" + hexNum).substr(-2));
-        return filename + '.png';
+        return hex(num) + '.png';
+    }
+
+    function hex(num) {
+        var hexNum = num.toString(16);
+        return "0x" + (("0" + hexNum).substr(-2));
     }
 
     /**
@@ -28,7 +31,7 @@
      * @return {Number} 進捗みくじの番号
      */
     var randomInt = function () {
-        return Math.floor( Math.random() * (MAX - MIN + 1) ) + MIN;
+        return Math.floor( Math.random() * (MAX - MIN + 1) + MIN );
     }
 
     /**
@@ -57,29 +60,35 @@
             vars[tmp[0]] = tmp[1];
         }
 
-        return vars['num'] === undefined ? 1 : vars['num'];
+        var num = parseInt(vars['num']);
+        return isValid(num) ? num : 0;
     }
 
     /**
      * 有効な進捗みくじ番号が指定されているか？
      * @param {Number} num 進捗みくじ番号
-     * @return {Boolean} 真偽値
+     * @return {Boolean} 有効な番号か示す真偽値
      */
     function isValid(num) {
-        // todo: エラー処理
+        if (typeof num == "undefined") {
+            return false;
+        } 
+        return (MIN <= num && num <= MAX);
     }
 
     function getFortune(num) {
         var res = [
+            "存在しない進捗",
             "大進捗", "小進捗", "進捗", "末進捗", "小進捗", "停滞", "中進捗", "中進捗", "小進捗", "大進捗",
             "末進捗", "停滞", "大停滞", "小進捗", "大進捗", "末進捗", "小進捗", "小進捗", "停滞", "進捗",
             "末進捗"
         ];
-        return res[num-1]
+        return res[num]
     }
 
     function getImgUrl(num) {
         var urls = [
+            "pic.twitter.com/XB7pKKVp5r",
             "pic.twitter.com/zdqC1b3E61",
             "pic.twitter.com/ar1FAT4ed1",
             "pic.twitter.com/eid9XEJuHg",
@@ -102,21 +111,45 @@
             "pic.twitter.com/n4Xl0duznc",
             "pic.twitter.com/gpaBjeKIpq"
         ];
-        return urls[num-1]
+        return urls[num]
     }
 
     var createTwitterButton = function (num) {
-        var n = parseInt(num);
-        var fortune = getFortune(n);
-        var imgUrl = getImgUrl(n);
+        var fortune = getFortune(num);
+        var imgUrl = getImgUrl(num);
         var html = '<a class="twitter btn btn-twitter" href="http://twitter.com/share?url=https://goo.gl/ljRHk8&text=【進捗みくじ】私の今年の運勢は「' + fortune + '」でした。2017年の進捗具合を占おう！' + imgUrl + '&hashtags=進捗みくじ" target="_blank">ツイートする</a>';
         $('#share-button').append(html);
+    }
+
+    var updatePagenation = function (num) {
+        var prev_n = num - 1;
+        if (isValid(prev_n)) {
+            $('.omikuji-prev').attr('href', `result.html?num=${prev_n}`);
+            $('.omikuji-prev').text('◀︎ ' + hex(prev_n));
+        } else {
+            disabledButton('.omikuji-prev');
+        }
+
+        var next_n = num + 1;
+        if (isValid(next_n)) {
+            $('.omikuji-next').attr('href', `result.html?num=${next_n}`);
+            $('.omikuji-next').text(hex(next_n) + ' ▶︎');
+        } else {
+            disabledButton('.omikuji-next');
+        }
+    }
+
+    function disabledButton(name) {
+        $(name).attr('aria-disabled', "true");
+        $(name).addClass('disabled');
+        $(name).text('...');
     }
 
     omikuji = {
         randomInt : randomInt,
         showOmikuji : showOmikuji,
         getOmikujiNumber : getOmikujiNumber,
+        updatePagenation : updatePagenation,
         createTwitterButton : createTwitterButton
     };
 

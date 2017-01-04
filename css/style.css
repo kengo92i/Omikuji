@@ -67,6 +67,16 @@ body {
     width: 100%;
 }
 
+/* result */
+#omikuji-pagenation {
+  position: relative;
+  height: 100px;
+  width: 100%;
+}
+.omikuji-prev, .omikuji-next { position: absolute; }
+.omikuji-next { right: 0px; }
+.okikuji-prev { left: 0px;  }
+
 /* footer */
 #footer {
     color: #FFF;

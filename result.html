@@ -22,6 +22,11 @@
            <a href="raffle.html" class="btn btn-lg btn-vermilion mt-2 mb-3">引き直す</a>
         </div>
 
+        <div id="omikuji-pagenation">
+            <a class="btn btn-vermilion omikuji-prev" href="">&larr; 0x06</a>
+            <a class="btn btn-vermilion omikuji-next" href="">0x08 &rarr;</a>
+        </div>
+
         <div id="share-button-area" class="card card-block text-xs-center">
             <h4 class="card-title">進捗報告</h4>
             <p class="card-text">お友達に進捗みくじの結果を報告しましょう！</p>
@@ -43,6 +48,7 @@
         $(function() {
             var omikujiNum = omikuji.getOmikujiNumber();
             omikuji.showOmikuji(omikujiNum, "#omikuji-container");
+            omikuji.updatePagenation(omikujiNum);
             omikuji.createTwitterButton(omikujiNum);
         });
     </script>
