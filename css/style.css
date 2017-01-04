@@ -68,6 +68,11 @@ body {
 }
 
 /* result */
+#omikuji-container img {
+    width: 100%;
+    max-width: 350px;
+}
+
 #omikuji-pagenation {
   position: relative;
   height: 100px;
