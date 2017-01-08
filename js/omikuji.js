@@ -17,10 +17,16 @@
      * @param {Number} num 10進数の正の整数
      * @return {String} 進捗みくじのファイル名
      */
-    var getOmikujiFilename = function (num) {
+    function getOmikujiFilename(num) {
         return hex(num) + '.png';
     }
 
+    /**
+     * 指定された数字を16進数表記にして返す
+     * 変換できる数字の範囲は 0x00 ~ 0xff までをサポート
+     * @param {Number} num 変換する数字
+     * @return {String} 16進数表記の数字を表す文字列
+     */
     function hex(num) {
         var hexNum = num.toString(16);
         return "0x" + (("0" + hexNum).substr(-2));
@@ -46,6 +52,7 @@
 
     /**
      * クエリ文字列から進捗みくじの番号を得る
+     * 番号の取得に問題があれば0を返す（不正な番号・指定されていない）
      * @return {Number} 進捗みくじの番号
      */
     var getOmikujiNumber = function () {
@@ -60,7 +67,7 @@
             vars[tmp[0]] = tmp[1];
         }
 
-        var num = parseInt(vars['num']);
+        var num = Number.parseInt(vars['num']);
         return isValid(num) ? num : 0;
     }
 
@@ -76,6 +83,11 @@
         return (MIN <= num && num <= MAX);
     }
 
+    /**
+     * 進捗みくじ番号に対応する運勢を取得
+     * @param {Number} num 進捗みくじ番号
+     * @return {String} 進捗みくじの運勢を示す文字列
+     */
     function getFortune(num) {
         var res = [
             "存在しない進捗",
@@ -86,6 +98,11 @@
         return res[num]
     }
 
+    /**
+     * twitterボタン用の進捗みくじ画像のURLを取得
+     * @param {Number} num 進捗みくじ番号
+     * @return {String} 進捗みくじ画像のURL
+     */
     function getImgUrl(num) {
         var urls = [
             "pic.twitter.com/XB7pKKVp5r",
@@ -114,6 +131,10 @@
         return urls[num]
     }
 
+    /**
+     * 表示中の進捗みくじに合わせたtwitterボタンを作成する
+     * @param {Number} num 表示中の進捗みくじ番号
+     */
     var createTwitterButton = function (num) {
         var fortune = getFortune(num);
         var imgUrl = getImgUrl(num);
@@ -121,6 +142,13 @@
         $('#share-button').append(html);
     }
 
+    /**
+     * 表示中のおみくじの前後に移動するページネーションを更新する
+     * 一つ前は '.omikuji-prev' 、一つ先は '.omikuji-next' をタグに設定する
+     * 前後が不正な番号になる場合は、ボタンをdisabledに設定する
+     * 存在しない進捗みくじだった場合は、前をdisabledに、次を0x01に設定している
+     * @param {Number} num 表示中の進捗みくじ番号
+     */
     var updatePagenation = function (num) {
         var prev_n = num - 1;
         if (isValid(prev_n)) {
@@ -139,6 +167,10 @@
         }
     }
 
+    /**
+     * 指定されたボタンをdisabledにする
+     * @param {String} name ボタンの識別子
+     */
     function disabledButton(name) {
         $(name).attr('aria-disabled', "true");
         $(name).addClass('disabled');
